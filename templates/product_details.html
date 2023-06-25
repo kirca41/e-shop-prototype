@@ -1,0 +1,25 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <nav class="mt-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><strong></strong></a></li>
+        <li class="breadcrumb-item active display-6 text-dark" aria-current="page"><strong>Product details</strong></li>
+      </ol>
+    </nav>
+
+    <div class="container d-flex justify-content-between">
+        <div>
+            <img src="{{ product.image_url }}" alt="{{ product.name }}" class="rounded"/>
+        </div>
+        <div class="text-end">
+            <h3 class="cart-title">{{ product.manufacturer.name }} {{ product.name }}</h3>
+            <p><em><small>{{ product.category }}</small></em></p>
+            <p><strong>Model: </strong>{{ product.model }}</p>
+            <p><strong>Price: </strong>{{ product.price }}</p>
+            <p><strong>In stock: </strong>{{ product.quantity }}</p>
+            <p class="lead text-justify">{{ product.description }}</p>
+            <a href="{% url 'add_to_cart' product_id=product.id %}" class="btn btn-primary">Add to cart</a>
+        </div>
+    </div>
+{% endblock %}

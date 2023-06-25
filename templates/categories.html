@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <nav class="mt-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><strong></strong></a></li>
+        <li class="breadcrumb-item active display-6 text-dark" aria-current="page"><strong>Categories</strong></li>
+      </ol>
+    </nav>
+    <ul class="list-group w-25 mx-auto">
+        {% for category in categories %}
+        <li class="list-group-item" style="background-color: lightgray">
+            <a class="text-decoration-none category" href="{{ category|lower }}">
+                {{ category }}
+            </a>
+        </li>
+        {% empty %}
+        <p class="display-6">No categories at the moment.</p>
+        {% endfor %}
+    </ul>
+{% endblock %}

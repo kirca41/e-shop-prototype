@@ -1,0 +1,158 @@
+{% load fontawesome_5 %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block title %}
+        <title>Local Library</title>
+    {% endblock %}
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    :root {
+      --black: #0B0D0C;
+      --grayish: #8C897B;
+      --creamish: #DACFB6;
+      --light-orange: #F06129;
+      --dark-orange: #D84925;
+    }
+
+    body {
+        background-color: var(--creamish);
+    }
+
+    .form-group > *, .buttons-group > * {
+        width: 45%;
+    }
+
+    .btn {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: var(--light-orange);
+        border-color: var(--light-orange);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--dark-orange);
+        border-color: var(--dark-orange);
+    }
+
+    .btn-primary:focus {
+        background-color: var(--dark-orange);
+        border-color: var(--dark-orange);
+    }
+
+    input[type='text'], input[type='number'], input[type='url'], input[type='password'], textarea, select {
+        background-color: lightgray !important;
+    }
+
+    .card-body {
+        background-color: lightgray;
+    }
+
+    .card-title, .cart-title {
+        color: var(--dark-orange);
+        font-weight: bold;
+    }
+
+    .fa.fa-guitar {
+        font-size: 1.5em;
+        color: var(--light-orange);
+    }
+
+    .navbar {
+        letter-spacing: 2px;
+    }
+
+    .category {
+        color: var(--light-orange);
+        font-weight: bold;
+        letter-spacing: 0.05em;
+    }
+
+    .category:hover {
+        color: var(--dark-orange);
+    }
+
+    .form-group > input[type='checkbox'] {
+        width: 15px;
+    }
+
+    input[name='postal_code'], #expiration_date {
+        margin-left: 2%;
+    }
+
+    #count {
+        font-size: 0.8em;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: var(--light-orange);
+        color: black;
+        padding-left: 4%;
+        border-radius: 80%;
+        text-align: right;
+    }
+
+</style>
+<body>
+
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'index' %}"><i class="fa fa-guitar"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'categories' %}">CATEGORIES</a>
+        </li>
+        {% if user.is_superuser %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'add_product' %}">ADD PRODUCT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'admin:index' %}">ADMIN PANEL</a>
+        </li>
+        {% endif %}
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'shopping_cart' %}" style="position: relative;">
+                  <i class="fa fa-shopping-cart"></i><span id="count"></span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">{{ user.get_username|upper }}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">LOG OUT</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}?next={{ request.path }}">LOGIN</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}?next={{ request.path }}">REGISTER</a>
+            </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% block content %}
+    <!-- default content text (typically empty) -->
+{% endblock %}
+</body>
+</html>

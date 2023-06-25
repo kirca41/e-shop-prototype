@@ -1,0 +1,38 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <nav class="mt-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="#"><strong></strong></a></li>
+        <li class="breadcrumb-item active display-6 text-dark" aria-current="page"><strong>Shopping Cart</strong></li>
+      </ol>
+    </nav>
+
+    <div class="container">
+        {% for p in products %}
+            <div class="d-flex justify-content-between mt-2">
+                <div class="d-flex">
+                    <img src="{{ p.product.image_url }}" alt="{{ p.product.name }}" class="rounded-3" style="width: 20%;" />
+                    <div class="my-auto ms-5">
+                        <div class="cart-title">{{ p.product.manufacturer }} {{ p.product.name }}</div>
+                        <div>{{ p.product.price }}$</div>
+                        <div>{{ p.quantity }}</div>
+                    </div>
+                </div>
+                <div class="my-auto"><a class="text-secondary" href="{% url 'remove_from_shopping_cart' product_id=p.id %}"><i class="fa fa-trash"></i></a></div>
+            </div>
+        {% empty %}
+            <p class="display-6">Your shopping cart is empty!</p>
+        {% endfor %}
+
+        {% if products %}
+        <hr class="border border-1 border-secondary" />
+        <div class="float-end text-end mb-2">
+            <p><strong>Total price:</strong></p>
+            <p>{{ total_price }}$</p>
+            <div><a class="btn btn-primary" href="{% url 'place_order' %}" style="width: 7em;">Checkout</a></div>
+            <div><a class="btn btn-secondary mt-2" href="{{ request.META.HTTP_REFERER }}" style="width: 7em;">Back</a></div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
